@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-class Github {
+class Cards {
   createData = async (request: any, response: any): Promise<void> => {
     const {
       name,
@@ -40,7 +40,61 @@ class Github {
     }
   };
 
-  getRepos = async (request: any, response: any): Promise<void> => {
+  updateData = async (request: any, response: any): Promise<void> => {
+    const {
+      id,
+      name,
+      github,
+      homepage,
+      description,
+      stack,
+      emoji,
+      secret,
+    } = request.body;
+    try {
+      if (secret === process.env.SECRET) {
+        await GithubCard.findByIdAndUpdate(
+          { _id: id },
+          { name, github, homepage, description, stack, emoji }
+        );
+        return response.status(200).json({
+          message: "Card successfully deleted",
+        });
+      }
+      return response.status(500).json({
+        error: "Bad secret key",
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({
+        error,
+      });
+    }
+  };
+
+  deleteData = async (request: any, response: any): Promise<void> => {
+    const { id, secret } = request.body;
+    try {
+      if (secret === process.env.SECRET) {
+        await GithubCard.findByIdAndDelete({
+          _id: id,
+        });
+        return response.status(200).json({
+          message: "Card successfully deleted",
+        });
+      }
+      return response.status(500).json({
+        error: "Bad secret key",
+      });
+    } catch (error) {
+      console.log(error);
+      return response.status(500).json({
+        error,
+      });
+    }
+  };
+
+  getData = async (request: any, response: any): Promise<void> => {
     try {
       const data = await GithubCard.find();
       return response.status(200).json(data);
@@ -53,4 +107,4 @@ class Github {
   };
 }
 
-export default new Github();
+export default new Cards();

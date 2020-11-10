@@ -1,9 +1,11 @@
 import { Router } from "express";
-import Github from "../controllers/github.controller";
+import Cards from "../controllers/github.controller";
 
 const githubRouter = Router();
 
-githubRouter.post("/create", Github.createData);
-githubRouter.get("/", Github.getRepos);
+githubRouter.post("/create", Cards.createData);
+githubRouter.post("/update", Cards.updateData);
+githubRouter.post("/delete", Cards.deleteData);
+githubRouter.get("/", Cards.getData);
 
 export default githubRouter;
