@@ -1,9 +1,9 @@
-import GithubCard from "../models/github.model";
+import ProjectCard from "../models/card.model";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-class Cards {
+class Card {
   createData = async (request: any, response: any): Promise<void> => {
     const {
       name,
@@ -16,7 +16,7 @@ class Cards {
     } = request.body;
     try {
       if (secret === process.env.SECRET) {
-        const githubCard = new GithubCard({
+        const projectCard = new ProjectCard({
           name,
           github,
           homepage,
@@ -24,7 +24,7 @@ class Cards {
           stack,
           emoji,
         });
-        await githubCard.save();
+        await projectCard.save();
         return response.status(201).json({
           message: "Card data successfully created",
         });
@@ -53,7 +53,7 @@ class Cards {
     } = request.body;
     try {
       if (secret === process.env.SECRET) {
-        await GithubCard.findByIdAndUpdate(
+        await ProjectCard.findByIdAndUpdate(
           { _id: id },
           { name, github, homepage, description, stack, emoji }
         );
@@ -76,7 +76,7 @@ class Cards {
     const { id, secret } = request.body;
     try {
       if (secret === process.env.SECRET) {
-        await GithubCard.findByIdAndDelete({
+        await ProjectCard.findByIdAndDelete({
           _id: id,
         });
         return response.status(200).json({
@@ -96,7 +96,7 @@ class Cards {
 
   getData = async (request: any, response: any): Promise<void> => {
     try {
-      const data = await GithubCard.find();
+      const data = await ProjectCard.find();
       return response.status(200).json(data);
     } catch (error) {
       console.log(error);
@@ -107,4 +107,4 @@ class Cards {
   };
 }
 
-export default new Cards();
+export default new Card();

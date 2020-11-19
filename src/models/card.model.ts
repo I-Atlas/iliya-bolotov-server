@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const githubSchema = new mongoose.Schema({
+const cardSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -25,4 +25,4 @@ const githubSchema = new mongoose.Schema({
   },
 });
 
-export = mongoose.model("GithubCard", githubSchema);
+export = mongoose.model("ProjectCard", cardSchema);
