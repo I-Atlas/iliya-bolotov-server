@@ -1,7 +1,7 @@
 {
   "name": "iliya-bolotov-server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.ts",
   "repository": "https://github.com/I-Atlas/iliya-bolotov-server.git",
   "author": "I-Atlas <54947380+I-Atlas@users.noreply.github.com>",
   "license": "Apache-2.0",
